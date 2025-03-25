@@ -4,7 +4,7 @@
     ],
     "regexManagers": [
       {
-        "fileMatch": ["k3s/k3s-version\\.txt"],
+        "fileMatch": ["cluster/k3s/k3s-version\\.txt"],
         "matchStrings": ["^(?<currentValue>v[\\d\\.\\+a-z]+)$"],
         "datasourceTemplate": "github-releases",
         "packageNameTemplate": "k3s-io/k3s",
