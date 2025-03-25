@@ -2,6 +2,16 @@
     "extends": [
       "config:base"
     ],
+    "regexManagers": [
+      {
+        "fileMatch": ["k3s/k3s-version\\.txt"],
+        "matchStrings": ["^(?<currentValue>v[\\d\\.\\+a-z]+)$"],
+        "datasourceTemplate": "github-releases",
+        "packageNameTemplate": "k3s-io/k3s",
+        "versioningTemplate": "loose",
+        "depNameTemplate": "k3s"
+      }
+    ],
     "dependencyDashboard": true,
     "timezone": "Europe/Berlin",
     "labels": ["helm", "dependencies"],
@@ -15,6 +25,11 @@
         "schedule": ["before 5am on monday"],
         "automerge": false,
         "rebaseWhen": "conflicted"
+      },
+      {
+        "matchPackageNames": ["k3s"],
+        "groupName": "k3s updates",
+        "automerge": false
       }
     ]
   }
