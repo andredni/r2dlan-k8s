@@ -1,0 +1,9 @@
+repositories:
+- name: netbox
+  url: https://charts.netbox.oss.netboxlabs.com/
+
+releases:
+- name: netbox
+  namespace: netbox
+  chart: netbox/netbox
+  version: 5.0.53

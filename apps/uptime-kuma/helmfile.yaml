@@ -1,0 +1,11 @@
+repositories:
+- name: uptime-kuma
+  url: https://dirsigler.github.io/uptime-kuma-helm
+
+releases:
+- name: uptime-kuma
+  namespace: uptime-kuma
+  chart: uptime-kuma/uptime-kuma
+  version: 2.21.2
+  values:
+    - values.yaml

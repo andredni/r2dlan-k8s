@@ -1,0 +1,14 @@
+{
+    "extends": [
+      "config:base"
+    ],
+    "packageRules": [
+      {
+        "matchManagers": ["helmfile"],
+        "enabled": true,
+        "groupName": "helm updates",
+        "schedule": ["before 5am on monday"]
+      }
+    ]
+  }
+  
