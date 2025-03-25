@@ -2,12 +2,19 @@
     "extends": [
       "config:base"
     ],
+    "dependencyDashboard": false,
+    "timezone": "Europe/Berlin",
+    "labels": ["helm", "dependencies"],
+    "prHourlyLimit": 5,
+    "prConcurrentLimit": 10,
     "packageRules": [
       {
         "matchManagers": ["helmfile"],
         "enabled": true,
         "groupName": "helm updates",
-        "schedule": ["before 5am on monday"]
+        "schedule": ["before 5am on monday"],
+        "automerge": false,
+        "rebaseWhen": "conflicted"
       }
     ]
   }
