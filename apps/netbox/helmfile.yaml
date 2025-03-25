@@ -7,3 +7,5 @@ releases:
   namespace: netbox
   chart: netbox/netbox
   version: 5.0.53
+  values:
+    - values.yaml
