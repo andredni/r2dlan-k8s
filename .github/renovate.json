@@ -2,7 +2,7 @@
     "extends": [
       "config:base"
     ],
-    "dependencyDashboard": false,
+    "dependencyDashboard": true,
     "timezone": "Europe/Berlin",
     "labels": ["helm", "dependencies"],
     "prHourlyLimit": 5,
