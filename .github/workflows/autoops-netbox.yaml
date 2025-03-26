@@ -1,0 +1,73 @@
+name: AutoOps netbox
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - apps/netbox/**
+  pull_request:
+    paths:
+      - apps/netbox/**
+
+jobs:
+  test:
+    name: Test netbox configuration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.13.3
+
+      - name: Install Helmfile
+        run: |
+          curl -sSL https://github.com/helmfile/helmfile/releases/latest/download/helmfile_linux_amd64 \
+            -o /usr/local/bin/helmfile
+          chmod +x /usr/local/bin/helmfile
+
+      - name: Install Helm Diff Plugin
+        run: helm plugin install https://github.com/databus23/helm-diff
+
+      - name: Helmfile Diff
+        run: helmfile diff
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    name: Deploy netbox
+    runs-on: ubuntu-latest
+
+    env:
+      KUBECONFIG: ${{ secrets.KUBECONFIG }}  # als Base64 gespeichert
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Decode Kubeconfig
+        run: |
+          echo "${KUBECONFIG}" | base64 -d > ~/.kube/config
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.13.3
+
+      - name: Install Helmfile
+        run: |
+          curl -sSL https://github.com/helmfile/helmfile/releases/latest/download/helmfile_linux_amd64 \
+            -o /usr/local/bin/helmfile
+          chmod +x /usr/local/bin/helmfile
+
+      - name: Install Helm Diff Plugin
+        run: helm plugin install https://github.com/databus23/helm-diff
+
+      - name: Helmfile Diff
+        run: helmfile diff
+
+      - name: Helmfile Apply (Deploy)
+        run: cd apps/netbox && helmfile apply
