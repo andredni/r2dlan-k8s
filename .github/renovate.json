@@ -22,14 +22,21 @@
         "matchManagers": ["helmfile"],
         "enabled": true,
         "groupName": "helm updates",
-        "schedule": ["before 5am on monday"],
+        "automergeType": "pr",
+        "prConcurrentLimit": 1,
+        "dependencyDashboardApproval": false,
+        "schedule": ["before 15:00", "after 09:00", "every weekday"],
         "automerge": false,
         "rebaseWhen": "conflicted"
       },
       {
         "matchPackageNames": ["k3s"],
         "groupName": "k3s updates",
-        "automerge": false
+        "automerge": false,
+        "automergeType": "pr",
+        "prConcurrentLimit": 1,
+        "dependencyDashboardApproval": false,
+        "schedule": ["before 15:00", "after 09:00", "every weekday"]
       }
     ]
   }
