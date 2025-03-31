@@ -7,8 +7,17 @@ releases:
   namespace: cert-manager
   chart: jetstack/cert-manager
   version: v1.17.1
+  wait: true
   hooks:
-      - events: ["preapply"]
+      - events: ["presync"]
+        showlogs: true
+        command: kubectl
+        args:
+          - apply
+          - -f
+          - https://github.com/cert-manager/cert-manager/releases/download/v1.17.1/cert-manager.crds.yaml
+
+      - events: ["postsync"]
         showlogs: true
         command: kubectl
         args:
@@ -16,10 +25,10 @@ releases:
           - -f
           - ./manifests/clusterissuer.yaml
 
-      - events: ["preuninstall"]
-        showlogs: true
-        command: kubectl
-        args:
-          - delete
-          - f
-          - ./manifests/clusterissuer.yaml
+      # - events: ["preuninstall"]
+      #   showlogs: true
+      #   command: kubectl
+      #   args:
+      #     - delete
+      #     - f
+      #     - ./manifests/clusterissuer.yaml

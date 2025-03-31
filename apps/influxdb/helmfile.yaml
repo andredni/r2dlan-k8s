@@ -1,0 +1,22 @@
+repositories:
+- name: influxdata
+  url: https://helm.influxdata.com/
+
+releases:
+- name: influxdata
+  namespace: influxdb
+  chart: influxdata/influxdb2
+  version: 2.1.2
+  createNamespace: true
+  wait: true
+  values:
+    - persistence:
+        size: 10Gi
+      ingress:
+        enabled: true
+        className: nginx
+        hostname: influxdb.r2dlan.me
+        tls: true
+        secretName: influxdb-tls
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-dns

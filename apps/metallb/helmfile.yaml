@@ -1,0 +1,26 @@
+repositories:
+- name: metallb
+  url: https://metallb.github.io/metallb
+
+releases:
+- name: metallb
+  namespace: r2dlan-system
+  chart: metallb/metallb 
+  version: 0.14.9
+  wait: true
+  hooks:
+      - events: ["postsync"]
+        showlogs: true
+        command: kubectl
+        args:
+          - apply
+          - -f
+          - ./manifests/bgp.yaml
+
+      - events: ["preuninstall"]
+        showlogs: true
+        command: kubectl
+        args:
+          - delete
+          - f
+          - ./manifests/bgp.yaml

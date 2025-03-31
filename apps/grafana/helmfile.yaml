@@ -6,4 +6,27 @@ releases:
 - name: grafana
   namespace: grafana
   chart: grafana/grafana
-  version: 8.10.4
+  version: 8.11.0
+  values:
+    - ingress:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-dns
+        hosts:
+          - grafana.r2dlan.me
+        tls:
+          - secretName: grafana-tls
+            hosts:
+              - grafana.r2dlan.me
+      persistence:
+        enabled: true
+        size: 5Gi
+      datasources:
+        datasources.yaml:
+          apiVersion: 1
+          datasources:
+          - name: Prometheus
+            type: prometheus
+            url: http://prometheus-operator-kube-p-prometheus.prometheus-operator:9090
+            access: proxy
+            isDefault: true

@@ -1,0 +1,33 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: lb-pool
+  namespace: r2dlan-system
+spec:
+  addresses:
+    - 192.168.214.2-192.168.214.244
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: mikrotik-peer
+  namespace: r2dlan-system
+spec:
+  peerAddress: 192.168.212.1  # MikroTik IP
+  peerASN: 64512              # ASN des MikroTik
+  myASN: 64513                # ASN der MetalLB-Nodes
+  holdTime: 90s
+  keepaliveTime: 30s
+---
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: local
+  namespace: r2dlan-system
+spec:
+  ipAddressPools:
+  - lb-pool
+  aggregationLength: 32
+  localPref: 100
+  communities:
+  - 64512:64520

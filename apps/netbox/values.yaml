@@ -1,3 +1,0 @@
-persistence:
-  accessMode: ReadWriteMany
-  storageClass: rook-cephfs

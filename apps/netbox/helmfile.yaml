@@ -6,6 +6,20 @@ releases:
 - name: netbox
   namespace: netbox
   chart: netbox/netbox
-  version: 5.0.53
+  version: 5.0.57
+  wait: true
   values:
-    - values.yaml
+    - persistence:
+        accessMode: ReadWriteMany
+        storageClass: rook-cephfs
+      ingress:
+        enabled: true
+        className: nginx
+        hosts:
+          - host: netbox.r2dlan.me
+            paths:
+              - /
+        tls:
+          - secretName: netbox-tls
+            hosts:
+              - netbox.r2dlan.me
