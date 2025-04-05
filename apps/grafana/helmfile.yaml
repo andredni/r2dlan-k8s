@@ -6,7 +6,7 @@ releases:
 - name: grafana
   namespace: grafana
   chart: grafana/grafana
-  version: 8.11.0
+  version: 8.11.3
   values:
     - ingress:
         enabled: true
