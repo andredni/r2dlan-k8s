@@ -6,7 +6,7 @@ releases:
   - name: rook-ceph
     namespace: rook-ceph
     chart: rook-release/rook-ceph
-    version: v1.13.3
+    version: v1.16.6
     createNamespace: true
     wait: true
     values:
