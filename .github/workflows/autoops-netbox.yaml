@@ -21,7 +21,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v4
         with:
-          version: v3.13.3
+          version: v4.3.0
 
       - name: Install Helmfile
         run: |
@@ -55,7 +55,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v4
         with:
-          version: v3.13.3
+          version: v4.3.0
 
       - name: Install Helmfile
         run: |
